@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | UMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #1a3a2a 0%, #2d5d3f 50%, #365f45 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Lato', sans-serif;
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            width: 90%;
+            max-width: 1000px;
+            height: 80vh;
+            max-height: 550px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .left-section {
+            flex: 1;
+            background: linear-gradient(135deg, #1a3a2a 0%, #2d5d3f 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 40px;
+            color: white;
+        }
+
+        .brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            color: #d4af37;
+        }
+
+        .tagline {
+            font-size: 16px;
+            font-weight: 300;
+            letter-spacing: 3px;
+            color: #c9a961;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 300;
+        }
+
+        .right-section {
+            flex: 1;
+            background: #f8f7f3;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 60px 50px;
+        }
+
+        .right-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #1a3a2a;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 600;
+            font-size: 13px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 14px 15px;
+            border: none;
+            border-bottom: 2px solid #ddd;
+            background: transparent;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            color: #333;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-bottom-color: #2d5d3f;
+        }
+
+        .error {
+            color: #d32f2f;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 14px;
+            background: linear-gradient(135deg, #2d5d3f 0%, #1a3a2a 100%);
+            color: white;
+            border: none;
+            border-radius: 3px;
+            font-family: 'Lato', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-login:hover {
+            background: linear-gradient(135deg, #1a3a2a 0%, #0f2820 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .signup-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 13px;
+            color: #666;
+        }
+
+        .signup-link a {
+            color: #2d5d3f;
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .signup-link a:hover {
+            color: #1a3a2a;
+            text-decoration: underline;
+        }
+
+        .non-field-errors {
+            color: #d32f2f;
+            font-size: 13px;
+            margin-bottom: 20px;
+            padding: 10px;
+            background: #ffebee;
+            border-radius: 3px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                height: auto;
+                max-height: none;
+            }
+
+            .left-section {
+                padding: 40px 30px;
+                min-height: 250px;
+            }
+
+            .brand {
+                font-size: 36px;
+            }
+
+            .right-section {
+                padding: 40px 30px;
+            }
+
+            .right-section h2 {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Left Section -->
+        <div class="left-section">
+            <div class="brand">UMS</div>
+            <div class="tagline">University Management System</div>
+            <!-- <p class="description">Excellence in education management. Track your academic progress, attendance, and courses with elegance and clarity.</p> -->
+        </div>
+
+        <!-- Right Section -->
+        <div class="right-section">
+            <h2>Welcome Back</h2>
+
+            {% if form.non_field_errors %}
+                <div class="non-field-errors">
+                    {% for error in form.non_field_errors %}
+                        {{ error }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <div class="form-group">
+                    <label for="{{ form.username.id_for_label }}">Username</label>
+                    {{ form.username }}
+                    {% if form.username.errors %}
+                        <div class="error">{{ form.username.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="{{ form.password.id_for_label }}">Password</label>
+                    {{ form.password }}
+                    {% if form.password.errors %}
+                        <div class="error">{{ form.password.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <button type="submit" class="btn-login">Login</button>
+            </form>
+
+            <div class="signup-link">
+                Don't have an account? <a href="{% url 'signup' %}">Sign Up</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

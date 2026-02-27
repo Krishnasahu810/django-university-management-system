@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | UMS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f8f7f3;
+            font-family: 'Lato', sans-serif;
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            height: 100vh;
+            background: linear-gradient(180deg, #1a3a2a 0%, #2d5d3f 100%);
+            padding: 40px 20px;
+            color: white;
+            position: fixed;
+            overflow-y: auto;
+            box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar-brand {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #d4af37;
+            letter-spacing: 1px;
+        }
+
+        .sidebar-nav a {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            margin-bottom: 25px;
+            padding: 12px 15px;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        .sidebar-nav a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #d4af37;
+            padding-left: 20px;
+        }
+
+        .sidebar-nav a.active {
+            background: rgba(212, 175, 55, 0.1);
+            color: #d4af37;
+            border-left: 3px solid #d4af37;
+            padding-left: 12px;
+        }
+
+        /* Main Content */
+        .main {
+            margin-left: 280px;
+            padding: 40px;
+            width: calc(100% - 280px);
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 50px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .welcome-text h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 36px;
+            color: #1a3a2a;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .welcome-text p {
+            font-size: 14px;
+            color: #999;
+            letter-spacing: 1px;
+        }
+
+        .logout-btn {
+            background: #d32f2f;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 3px;
+            font-family: 'Lato', sans-serif;
+            font-weight: 600;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .logout-btn:hover {
+            background: #b71c1c;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(211, 47, 47, 0.3);
+        }
+
+        /* Dashboard Title */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            color: #1a3a2a;
+            margin-top: 40px;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+        }
+
+        .card {
+            background: white;
+            padding: 35px 25px;
+            border-radius: 3px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 3px solid #2d5d3f;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+        }
+
+        .card-label {
+            font-size: 13px;
+            color: #999;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .card-value {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            color: #2d5d3f;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .card-desc {
+            font-size: 12px;
+            color: #bbb;
+            letter-spacing: 0.5px;
+        }
+
+        /* Quick Actions */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .action-btn {
+            background: linear-gradient(135deg, #2d5d3f 0%, #1a3a2a 100%);
+            color: white;
+            border: none;
+            padding: 20px;
+            border-radius: 3px;
+            text-decoration: none;
+            text-align: center;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 20px rgba(45, 93, 63, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 20px;
+            }
+
+            .main {
+                margin-left: 0;
+                width: 100%;
+                padding: 20px;
+            }
+
+            .welcome-text h1 {
+                font-size: 24px;
+            }
+
+            .top-bar {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <div class="sidebar-brand">UMS</div>
+        <nav class="sidebar-nav">
+            <a href="{% url 'dashboard' %}" class="active">Dashboard</a>
+            <a href="{% url 'student_profile' %}">Profile</a>
+            <a href="{% url 'courses' %}">Courses</a>
+            <a href="{% url 'attendance' %}">Attendance</a>
+            <a href="#marks">Marks</a>
+        </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main">
+        <div class="top-bar">
+            <div class="welcome-text">
+                <h1>Welcome, {{ request.user.username }}</h1>
+                <p>Dashboard Overview</p>
+            </div>
+            <form method="POST" action="{% url 'logout' %}" style="margin: 0;">
+                {% csrf_token %}
+                <button type="submit" class="logout-btn">Logout</button>
+            </form>
+        </div>
+
+        <h2 class="section-title">Your Performance</h2>
+
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-label">Total Courses</div>
+                <div class="card-value">{{ total_courses }}</div>
+                <div class="card-desc">Enrolled</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">Attendance</div>
+                <div class="card-value">{{ attendance }}%</div>
+                <div class="card-desc">Present</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">Average Marks</div>
+                <div class="card-value">{{ average_marks }}%</div>
+                <div class="card-desc">Overall</div>
+            </div>
+
+            <div class="card">
+                <div class="card-label">Current Year</div>
+                <div class="card-value">{{ current_year }}</div>
+                <div class="card-desc">Academic Year</div>
+            </div>
+        </div>
+
+        <h2 class="section-title">Quick Actions</h2>
+        <div class="quick-actions">
+            <a href="{% url 'student_profile' %}" class="action-btn">View Profile</a>
+            <a href="{% url 'courses' %}" class="action-btn">My Courses</a>
+            <a href="{% url 'attendance' %}" class="action-btn">Track Attendance</a>
+        </div>
