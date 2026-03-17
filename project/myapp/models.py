@@ -2,8 +2,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 
 
-class CustomUser(AbstractUser):
-    pass
+class CustomUser(AbstractUser):\n    USER_TYPE_CHOICES = [\n        ('student', 'Student'),\n        ('admin', 'Admin'),\n        ('instructor', 'Instructor'),\n    ]\n\n    user_type = models.CharField(max_length=20, choices=USER_TYPE_CHOICES, default='student')\n\n    def __str__(self):\n        return self.username
 
 
 class Course(models.Model):

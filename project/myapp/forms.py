@@ -10,12 +10,7 @@ class CourseForm(forms.ModelForm):
         fields = ['code', 'name', 'description', 'credits', 'status', 'semester', 'instructor']
 
 
-class AttendanceForm(forms.Form):
-    student = forms.ModelChoiceField(queryset=CustomUser.objects.all())
-    course = forms.ModelChoiceField(queryset=Course.objects.all())
-    classes_held = forms.IntegerField(min_value=0, initial=0)
-    present = forms.IntegerField(min_value=0, initial=0)
-    absent = forms.IntegerField(min_value=0, initial=0)
+class AttendanceForm(forms.Form):\n    student = forms.ModelChoiceField(queryset=CustomUser.objects.filter(user_type='student'))\n    course = forms.ModelChoiceField(queryset=Course.objects.all())\n    classes_held = forms.IntegerField(min_value=0, initial=0)\n    present = forms.IntegerField(min_value=0, initial=0)\n    absent = forms.IntegerField(min_value=0, initial=0)
 
 class SignupForm(UserCreationForm):
     email = forms.EmailField()
