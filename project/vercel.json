@@ -1,0 +1,14 @@
+{
+  "builds": [
+    {
+      "src": "DJANGO UMS/wsgi.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "DJANGO UMS/wsgi.py"
+    }
+  ]
+}
