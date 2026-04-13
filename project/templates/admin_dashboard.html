@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - UMS{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-12">
+            <h1>📊 Admin Dashboard</h1>
+            <p class="text-muted">System Overview & Management Center</p>
+            <hr>
+        </div>
+    </div>
+
+    <!-- System Statistics -->
+    <div class="row mb-5">
+        <div class="col-md-4 mb-3">
+            <div class="card border-primary">
+                <div class="card-body">
+                    <h5 class="card-title">👥 Total Students</h5>
+                    <h2 class="text-primary">{{ total_students }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card border-success">
+                <div class="card-body">
+                    <h5 class="card-title">⚙️ Total Admins</h5>
+                    <h2 class="text-success">{{ total_admins }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card border-info">
+                <div class="card-body">
+                    <h5 class="card-title">📚 Total Courses</h5>
+                    <h2 class="text-info">{{ total_courses }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card border-warning">
+                <div class="card-body">
+                    <h5 class="card-title">👨‍🏫 Total Instructors</h5>
+                    <h2 class="text-warning">{{ total_instructors }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card border-danger">
+                <div class="card-body">
+                    <h5 class="card-title">✅ Total Enrollments</h5>
+                    <h2 class="text-danger">{{ total_enrollments }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Navigation Menu -->
+    <div class="row">
+        <div class="col-12">
+            <h3>Management Tools</h3>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- User Management -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">👥 User Management</h5>
+                </div>
+                <div class="card-body">
+                    <p>Manage system users (students and admins)</p>
+                    <a href="{% url 'admin_users' %}" class="btn btn-primary btn-sm">View Users</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course Management -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-info text-white">
+                    <h5 class="mb-0">📚 Course Management</h5>
+                </div>
+                <div class="card-body">
+                    <p>Create, edit, and delete courses</p>
+                    <a href="{% url 'admin_courses' %}" class="btn btn-info btn-sm">Manage Courses</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enrollment Management -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-success text-white">
+                    <h5 class="mb-0">✅ Enrollment Management</h5>
+                </div>
+                <div class="card-body">
+                    <p>Enroll students in courses</p>
+                    <a href="{% url 'admin_enrollments' %}" class="btn btn-success btn-sm">Manage Enrollments</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Attendance Management -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-warning text-white">
+                    <h5 class="mb-0">📋 Attendance Management</h5>
+                </div>
+                <div class="card-body">
+                    <p>Record and manage student attendance</p>
+                    <a href="{% url 'admin_attendance' %}" class="btn btn-warning btn-sm">Manage Attendance</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Marks Management -->
+        <div class="col-md-6 mb-4">
+            <div class="card">
+                <div class="card-header bg-danger text-white">
+                    <h5 class="mb-0">📊 Marks Management</h5>
+                </div>
+                <div class="card-body">
+                    <p>Assign and manage student marks</p>
+                    <a href="{% url 'admin_marks' %}" class="btn btn-danger btn-sm">Manage Marks</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="row mt-5">
+        <div class="col-12">
+            <h3>Quick Actions</h3>
+            <hr>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <a href="{% url 'admin_course_create' %}" class="btn btn-primary">+ New Course</a>
+            <a href="{% url 'admin_enrollment_create' %}" class="btn btn-success">+ New Enrollment</a>
+            <a href="{% url 'admin_attendance_create' %}" class="btn btn-warning">+ Add Attendance</a>
+            <a href="{% url 'admin_marks_create' %}" class="btn btn-danger">+ Add Marks</a>
+            <a href="{% url 'logout' %}" class="btn btn-secondary">Logout</a>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        transition: transform 0.2s;
+    }
+    .card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    h1 {
+        color: #333;
+        font-weight: bold;
+    }
+</style>
+{% endblock %}

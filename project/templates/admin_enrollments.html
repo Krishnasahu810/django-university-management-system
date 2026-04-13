@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Enrollments - Admin Panel{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h1>✅ Manage Enrollments</h1>
+        </div>
+        <div class="col-md-4 text-right">
+            <a href="{% url 'admin_enrollment_create' %}" class="btn btn-success">+ New Enrollment</a>
+            <a href="{% url 'admin_dashboard' %}" class="btn btn-secondary">← Dashboard</a>
+        </div>
+    </div>
+    
+    <div class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+                <tr>
+                    <th>Student</th>
+                    <th>Course</th>
+                    <th>Enrollment Date</th>
+                    <th>Grade</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for enrollment in enrollments %}
+                <tr>
+                    <td>{{ enrollment.student.first_name }} {{ enrollment.student.last_name }}</td>
+                    <td>{{ enrollment.course.code }} - {{ enrollment.course.name }}</td>
+                    <td>{{ enrollment.enrollment_date|date:"M d, Y" }}</td>
+                    <td>
+                        {% if enrollment.grade %}
+                            <strong>{{ enrollment.grade }}</strong>
+                        {% else %}
+                            <span class="text-muted">Not graded</span>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center text-muted">No enrollments found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
