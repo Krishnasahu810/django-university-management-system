@@ -124,4 +124,3 @@ AUTH_USER_MODEL = 'myapp.CustomUser'
 
 LOGOUT_REDIRECT_URL = 'login'
 
-ALLOWED_HOSTS = ["*"]

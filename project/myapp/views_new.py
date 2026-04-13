@@ -89,9 +89,12 @@ def login_view(request):
 
 
 def logout_view(request):
+    """Logout user"""
     logout(request)
     return redirect('login')
 
+
+# ========== STUDENT VIEWS ==========
 
 @login_required(login_url='login')
 @student_required
@@ -164,8 +167,6 @@ def courses(request):
         })
     context = {'courses': courses_data}
     return render(request, 'courses.html', context)
-
-
 
 
 @login_required(login_url='login')
