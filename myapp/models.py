@@ -3,7 +3,28 @@ from django.contrib.auth.models import AbstractUser
 
 
 class CustomUser(AbstractUser):
-    pass
+    ROLE_CHOICES = [
+        ('admin', 'Administrator'),
+        ('student', 'Student'),
+    ]
+    
+    role = models.CharField(max_length=10, choices=ROLE_CHOICES, default='student')
+    phone = models.CharField(max_length=15, blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    date_of_birth = models.DateField(blank=True, null=True)
+    enrollment_year = models.IntegerField(blank=True, null=True)
+    
+    class Meta:
+        ordering = ['first_name', 'last_name']
+    
+    def is_admin(self):
+        return self.role == 'admin' or self.is_staff
+    
+    def is_student(self):
+        return self.role == 'student'
+    
+    def __str__(self):
+        return f"{self.first_name} {self.last_name} ({self.get_role_display()})"
 
 
 class Course(models.Model):
@@ -67,11 +88,33 @@ class Attendance(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        
-        pass
+        ordering = ['-updated_at']
 
     def percentage(self):
         return (self.present / self.classes_held * 100) if self.classes_held > 0 else 0
 
     def __str__(self):
         return f"Attendance for {self.enrollment.student.username} in {self.enrollment.course.code}"
+
+
+class Marks(models.Model):
+    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE, related_name='marks_records')
+    assignment = models.IntegerField(default=0, help_text='Assignment marks out of 10')
+    midterm = models.IntegerField(default=0, help_text='Midterm marks out of 30')
+    final = models.IntegerField(default=0, help_text='Final exam marks out of 60')
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-updated_at']
+        unique_together = (('enrollment',),)
+
+    def total(self):
+        return self.assignment + self.midterm + self.final
+
+    def percentage(self):
+        total_marks = self.total()
+        return (total_marks / 100 * 100) if total_marks > 0 else 0
+
+    def __str__(self):
+        return f"Marks for {self.enrollment.student.username} in {self.enrollment.course.code}"

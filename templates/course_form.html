@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Attendance | UMS</title>
+    <title>Create Course | UMS</title>
     <style>
         * {
             margin: 0;
@@ -26,7 +26,7 @@
             border-radius: 8px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
             padding: 40px;
-            max-width: 500px;
+            max-width: 600px;
             width: 100%;
             border-top: 4px solid #2d5016;
         }
@@ -156,21 +156,21 @@
             }
 
             button[type="submit"] {
-                padding: 10px 20px;
-                font-size: 14px;
+                padding: 12px 24px;
+                font-size: 16px;
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Create Attendance</h1>
+        <h1>Create Course</h1>
         <form method="post">
             {% csrf_token %}
             {{ form.as_p }}
             <button type="submit">Create</button>
         </form>
-        <p class="back-link"><a href="{% url 'attendance' %}">Back to attendance</a></p>
+        <p class="back-link"><a href="{% url 'courses' %}">Back to courses</a></p>
     </div>
 </body>
 </html>

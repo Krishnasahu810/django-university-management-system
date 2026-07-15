@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up - UMS{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center mt-5">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h4 class="mb-0">📝 Create Student Account</h4>
+            </div>
+            <div class="card-body">
+                {% if form.non_field_errors %}
+                    {% for error in form.non_field_errors %}
+                        <div class="alert alert-danger">{{ error }}</div>
+                    {% endfor %}
+                {% endif %}
+
+                <form method="POST">
+                    {% csrf_token %}
+
+                    <div class="mb-3">
+                        <label for="id_username" class="form-label">Username</label>
+                        <input type="text" name="username" id="id_username" class="form-control" placeholder="Choose a unique username" required>
+                        {% if form.username.errors %}
+                            <small class="text-danger">{{ form.username.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_email" class="form-label">Email Address</label>
+                        <input type="email" name="email" id="id_email" class="form-control" placeholder="your@email.com" required>
+                        {% if form.email.errors %}
+                            <small class="text-danger">{{ form.email.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_first_name" class="form-label">First Name</label>
+                        <input type="text" name="first_name" id="id_first_name" class="form-control" placeholder="Enter first name">
+                        {% if form.first_name.errors %}
+                            <small class="text-danger">{{ form.first_name.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_last_name" class="form-label">Last Name</label>
+                        <input type="text" name="last_name" id="id_last_name" class="form-control" placeholder="Enter last name">
+                        {% if form.last_name.errors %}
+                            <small class="text-danger">{{ form.last_name.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_password1" class="form-label">Password</label>
+                        <input type="password" name="password1" id="id_password1" class="form-control" placeholder="Create a strong password" required>
+                        {% if form.password1.errors %}
+                            <small class="text-danger">{{ form.password1.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="id_password2" class="form-label">Confirm Password</label>
+                        <input type="password" name="password2" id="id_password2" class="form-control" placeholder="Confirm your password" required>
+                        {% if form.password2.errors %}
+                            <small class="text-danger">{{ form.password2.errors.0 }}</small>
+                        {% endif %}
+                    </div>
+
+                    <button type="submit" class="btn btn-success w-100">Create Account</button>
+                </form>
+
+                <hr>
+
+                <p class="text-center mb-0">
+                    Already have an account? 
+                    <a href="{% url 'login' %}">Login here</a>
+                </p>
+            </div>
+        </div>
+
+        <div class="alert alert-info mt-4">
+            <strong>✅ New Account Benefits:</strong>
+            <ul class="mb-0 mt-2">
+                <li>Track your academic progress</li>
+                <li>View attendance records</li>
+                <li>Check marks and grades</li>
+                <li>Access course information</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

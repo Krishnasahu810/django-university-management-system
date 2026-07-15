@@ -1,0 +1,172 @@
+{% extends "base.html" %}
+
+{% block title %}Student Dashboard - UMS{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1>📊 Student Dashboard</h1>
+        <p class="text-muted">Welcome, {{ user.first_name|default:user.username }}!</p>
+        <hr>
+    </div>
+</div>
+
+<!-- Statistics Cards -->
+<div class="row mb-5">
+    <div class="col-md-3 mb-3">
+        <div class="card border-primary">
+            <div class="card-body text-center">
+                <h5 class="card-title">📚 Courses</h5>
+                <h2 class="text-primary">{{ total_courses }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-success">
+            <div class="card-body text-center">
+                <h5 class="card-title">📋 Attendance</h5>
+                <h2 class="text-success">{{ attendance }}%</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-warning">
+            <div class="card-body text-center">
+                <h5 class="card-title">📊 Avg Marks</h5>
+                <h2 class="text-warning">{{ average_marks }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-info">
+            <div class="card-body text-center">
+                <h5 class="card-title">✅ Enrolled</h5>
+                <h2 class="text-info">{{ enrollments_count }}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Links -->
+<div class="row">
+    <div class="col-12">
+        <h3>Quick Access</h3>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">📚 My Courses</h5>
+            </div>
+            <div class="card-body">
+                <p>View all your enrolled courses and course details</p>
+                <a href="{% url 'courses' %}" class="btn btn-info btn-sm">View Courses</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0">📋 Attendance</h5>
+            </div>
+            <div class="card-body">
+                <p>Check your attendance record for all courses</p>
+                <a href="{% url 'attendance' %}" class="btn btn-success btn-sm">View Attendance</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-warning text-white">
+                <h5 class="mb-0">📊 Marks & Grades</h5>
+            </div>
+            <div class="card-body">
+                <p>View your marks and performance for all courses</p>
+                <a href="{% url 'marks' %}" class="btn btn-warning btn-sm">View Marks</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0">👤 My Profile</h5>
+            </div>
+            <div class="card-body">
+                <p>Update your personal and academic information</p>
+                <a href="{% url 'student_profile' %}" class="btn btn-primary btn-sm">View Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Performance Summary -->
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>Performance Summary</h3>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Overall Attendance</h5>
+            </div>
+            <div class="card-body">
+                <div class="progress" style="height: 25px;">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: {{ attendance }}%;" aria-valuenow="{{ attendance }}" aria-valuemin="0" aria-valuemax="100">
+                        {{ attendance }}%
+                    </div>
+                </div>
+                <small class="text-muted mt-2 d-block">Keep the attendance above 75%</small>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Average Marks</h5>
+            </div>
+            <div class="card-body">
+                <h2 class="text-center">{{ average_marks }}/100</h2>
+                <div class="progress" style="height: 25px;">
+                    {% if average_marks >= 80 %}
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ average_marks }}%;" aria-valuenow="{{ average_marks }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ average_marks }}%
+                        </div>
+                    {% elif average_marks >= 60 %}
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ average_marks }}%;" aria-valuenow="{{ average_marks }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ average_marks }}%
+                        </div>
+                    {% else %}
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ average_marks }}%;" aria-valuenow="{{ average_marks }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ average_marks }}%
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-4">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Course Status</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Completed:</strong> 0 courses</p>
+                <p><strong>In Progress:</strong> {{ total_courses }} courses</p>
+                <p><strong>Not Started:</strong> 0 courses</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

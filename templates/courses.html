@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}My Courses - UMS{% endblock %}
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1>📚 My Courses</h1>
+        <p class="text-muted">All courses you are enrolled in</p>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    {% for course in courses %}
+    <div class="col-md-6 mb-4">
+        <div class="card">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0">{{ course.code }}</h5>
+            </div>
+            <div class="card-body">
+                <h6 class="card-title">{{ course.name }}</h6>
+                <p class="text-muted">
+                    <strong>Instructor:</strong> {{ course.instructor }}
+                </p>
+                <p class="text-muted">
+                    <strong>Credits:</strong> {{ course.credits }}
+                </p>
+                <p>
+                    {% if course.status|lower == 'active' %}
+                        <span class="badge bg-success">{{ course.status|title }}</span>
+                    {% else %}
+                        <span class="badge bg-danger">{{ course.status|title }}</span>
+                    {% endif %}
+                </p>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12">
+        <div class="alert alert-info">
+            You are not enrolled in any courses yet. Contact your admin for enrollment.
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

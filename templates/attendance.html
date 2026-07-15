@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Attendance - UMS{% endblock %}
+
+{% block content %}
+<div class="row mb-4">
+    <div class="col-12">
+        <h1>📋 My Attendance</h1>
+        <p class="text-muted">Your attendance records for all enrolled courses</p>
+        <hr>
+    </div>
+</div>
+
+<!-- Overall Statistics -->
+<div class="row mb-5">
+    <div class="col-md-3 mb-3">
+        <div class="card border-primary">
+            <div class="card-body text-center">
+                <h5 class="card-title">Classes Held</h5>
+                <h2 class="text-primary">{{ total_classes }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-success">
+            <div class="card-body text-center">
+                <h5 class="card-title">Present</h5>
+                <h2 class="text-success">{{ present_count }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-danger">
+            <div class="card-body text-center">
+                <h5 class="card-title">Absent</h5>
+                <h2 class="text-danger">{{ absent_count }}</h2>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card border-warning">
+            <div class="card-body text-center">
+                <h5 class="card-title">Overall %</h5>
+                <h2 class="text-warning">{{ attendance_percentage }}%</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Course-wise Attendance Table -->
+<div class="row">
+    <div class="col-12">
+        <h3>Course-wise Attendance</h3>
+        <hr>
+    </div>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-striped table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Classes Held</th>
+                <th>Present</th>
+                <th>Absent</th>
+                <th>Attendance %</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for attendance in course_attendance %}
+            <tr>
+                <td><strong>{{ attendance.code }}</strong></td>
+                <td>{{ attendance.name }}</td>
+                <td>{{ attendance.classes_held }}</td>
+                <td>{{ attendance.present }}</td>
+                <td>{{ attendance.absent }}</td>
+                <td>
+                    {% if attendance.percentage >= 75 %}
+                        <span class="badge bg-success">{{ attendance.percentage }}%</span>
+                    {% elif attendance.percentage >= 60 %}
+                        <span class="badge bg-warning">{{ attendance.percentage }}%</span>
+                    {% else %}
+                        <span class="badge bg-danger">{{ attendance.percentage }}%</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6" class="text-center text-muted">No attendance records found</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<!-- Attendance Progress Bar -->
+<div class="row mt-5">
+    <div class="col-12">
+        <h3>Overall Performance</h3>
+        <hr>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <p><strong>Current Attendance:</strong> {{ attendance_percentage }}%</p>
+                <div class="progress" style="height: 30px;">
+                    {% if attendance_percentage >= 75 %}
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ attendance_percentage }}%;" aria-valuenow="{{ attendance_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ attendance_percentage }}%
+                        </div>
+                    {% elif attendance_percentage >= 60 %}
+                        <div class="progress-bar bg-warning" role="progressbar" style="width: {{ attendance_percentage }}%;" aria-valuenow="{{ attendance_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ attendance_percentage }}%
+                        </div>
+                    {% else %}
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: {{ attendance_percentage }}%;" aria-valuenow="{{ attendance_percentage }}" aria-valuemin="0" aria-valuemax="100">
+                            {{ attendance_percentage }}%
+                        </div>
+                    {% endif %}
+                </div>
+                <small class="text-muted mt-2 d-block">⚠️ Minimum required attendance: 75%</small>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
